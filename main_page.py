@@ -7,7 +7,7 @@ class MainPage(View):
         self.__question = ft.TextField(
             hint_text="Digite sua Questão",
             multiline=True,
-            expand=True,
+            expand_loose=True,
             max_lines=3,
         )
         self.__language = ft.Dropdown(
@@ -16,6 +16,7 @@ class MainPage(View):
                 ft.dropdown.Option("Pseudocódigo"),
                 ft.dropdown.Option("Python"),
             ],
+            max_menu_height=200
         )
         self.__answer = ft.TextField(
             hint_text="Digite sua Resposta",
@@ -32,7 +33,7 @@ class MainPage(View):
             max_lines=5,
         )
         controls = [
-            ft.Row(
+            ft.ResponsiveRow(
                 controls=[
                     self.__question,
                     self.__language,
@@ -43,12 +44,10 @@ class MainPage(View):
                 controls=[
                     ft.OutlinedButton(
                         'Limpar',
-                        width=250,
                         on_click=self.__clear_correction
                     ),
                     ft.FilledButton(
                         'Corrigir',
-                        width=250,
                         on_click=self.__get_response
                     )
                 ],
