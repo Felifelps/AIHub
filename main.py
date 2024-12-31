@@ -21,6 +21,8 @@ def main(page: ft.Page):
 
 if __name__ == "__main__":
     ft.app(
-        name="CodeCorrector",
+        name="",
         target=main,
+        port=8000,
+        view=ft.AppView.FLET_APP_WEB
     )
