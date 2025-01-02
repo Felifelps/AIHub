@@ -1,10 +1,14 @@
 import flet as ft
 from constants import LANGUAGES
-from view import View
+from ui.drawer import Drawer
+from ui.view import View
 
 
-class MainPage(View):
-    def __init__(self, **kwargs):
+class CodeCorrectorPage(View):
+    title = 'CodeCorrector'
+
+    def build(self):
+        self.drawer = Drawer()
         self.__question = ft.TextField(
             hint_text="Digite sua Questão",
             multiline=True,
@@ -30,7 +34,7 @@ class MainPage(View):
             min_lines=5,
             max_lines=5,
         )
-        controls = [
+        self.content = [
             self.__question,
             self.__language,
             self.__answer,
@@ -50,7 +54,7 @@ class MainPage(View):
             ),
             self.__correction
         ]
-        super().__init__(*controls, **kwargs)
+        return super().build()
 
     def __get_response(self, e):
         question = self.__question.value

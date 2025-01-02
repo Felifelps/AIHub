@@ -1,5 +1,5 @@
 import os
-from agent import Agent
+from ai.agent import Agent
 from constants import GEMINI_MODEL
 import google.generativeai as genai
 from langchain_google_genai import ChatGoogleGenerativeAI

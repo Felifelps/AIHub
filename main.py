@@ -1,5 +1,6 @@
 import flet as ft
-from main_page import MainPage
+from ui.code_corrector_page import CodeCorrectorPage
+from ui.readme_generator_page import ReadmeGeneratorPage
 
 
 def main(page: ft.Page):
@@ -7,16 +8,19 @@ def main(page: ft.Page):
     page.theme_mode = 'dark'
     page.auto_scroll = True
 
-    page.views.extend([
-        MainPage(route='/'),
-    ])
+    views = {view.route: view for view in [
+        CodeCorrectorPage(route='/corrector'),
+        ReadmeGeneratorPage(route='/readme')
+    ]}
+
+    page.views.append(views['/corrector'])
 
     def on_route_change(e):
-        page.views.sort(key=lambda view: view.route == page.route)
+        page.views[0] = views[page.route]
         page.update()
 
     page.on_route_change = on_route_change
-    page.go('/')
+    page.go('/corrector')
 
 
 if __name__ == "__main__":

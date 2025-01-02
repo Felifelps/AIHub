@@ -1,5 +1,5 @@
 import os
-from agent import Agent
+from ai.agent import Agent
 from constants import OPENAI_MODEL
 from langchain_openai import ChatOpenAI
 
