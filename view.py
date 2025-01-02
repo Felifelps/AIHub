@@ -9,8 +9,8 @@ class View(ft.View):
     def __init__(self, *controls, **kwargs):
         super().__init__(**kwargs)
         self._loading = ft.ProgressRing(
-            width=40,
-            height=40,
+            width=25,
+            height=25,
             stroke_width=4,
             visible=False
         )

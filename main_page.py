@@ -1,4 +1,5 @@
 import flet as ft
+from constants import LANGUAGES
 from view import View
 
 
@@ -6,16 +7,14 @@ class MainPage(View):
     def __init__(self, **kwargs):
         self.__question = ft.TextField(
             hint_text="Digite sua Questão",
+            value="Receba um número e exiba seu dobro",
             multiline=True,
             expand_loose=True,
             max_lines=3,
         )
         self.__language = ft.Dropdown(
-            value="Pseudocódigo",
-            options=[
-                ft.dropdown.Option("Pseudocódigo"),
-                ft.dropdown.Option("Python"),
-            ],
+            value=LANGUAGES[0],
+            options=[ft.dropdown.Option(language) for language in LANGUAGES],
             max_menu_height=200
         )
         self.__answer = ft.TextField(
@@ -33,12 +32,8 @@ class MainPage(View):
             max_lines=5,
         )
         controls = [
-            ft.ResponsiveRow(
-                controls=[
-                    self.__question,
-                    self.__language,
-                ]
-            ),
+            self.__question,
+            self.__language,
             self.__answer,
             ft.Row(
                 controls=[
@@ -48,6 +43,7 @@ class MainPage(View):
                     ),
                     ft.FilledButton(
                         'Corrigir',
+                        width=90,
                         on_click=self.__get_response
                     )
                 ],
