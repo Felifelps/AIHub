@@ -1,6 +1,5 @@
 import flet as ft
 from constants import LANGUAGES
-from ui.drawer import Drawer
 from ui.view import View
 
 
@@ -8,7 +7,6 @@ class CodeCorrectorPage(View):
     title = 'CodeCorrector'
 
     def build(self):
-        self.drawer = Drawer()
         self.__question = ft.TextField(
             hint_text="Digite sua Questão",
             multiline=True,

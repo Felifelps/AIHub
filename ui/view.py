@@ -17,26 +17,39 @@ class View(ft.View):
     def build(self):
         return ft.Column(
             expand=True,
-            alignment=ft.MainAxisAlignment.SPACE_AROUND,
             controls=[
                 ft.Row(
                     controls=[
-                        ft.IconButton(
-                            icon=ft.Icons.MENU,
-                            on_click=lambda e: e.page.open(self.drawer) and e.page.update()
+                        ft.PopupMenuButton(
+                            items=[
+                                ft.PopupMenuItem(
+                                    text="CodeCorrector",
+                                    checked=self.title == "CodeCorrector",
+                                    on_click=lambda e: e.page.go("/corrector")
+                                ),
+                                ft.PopupMenuItem(
+                                    text="ReadmeGenerator",
+                                    checked=self.title == "ReadmeGenerator",
+                                    on_click=lambda e: e.page.go("/readme")
+                                ),
+                            ]
                         ),
                         ft.Text(
                             self.title,
+                            expand=True,
                             size=40,
+                            text_align=ft.TextAlign.CENTER
                         )
                     ],
-                    alignment=ft.MainAxisAlignment.CENTER,
                 ),
                 ft.Row(
                     controls=[self._loading],
                     alignment=ft.MainAxisAlignment.CENTER,
                 ),
-                *self.content,
+                ft.Column(
+                    expand=True,
+                    controls=self.content,
+                ),
                 ft.Row(
                     controls=[
                         ft.TextButton(
