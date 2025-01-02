@@ -1,37 +1,38 @@
 import flet as ft
 from constants import LANGUAGES
+from ai.code_corrector_agent import CodeCorrectorAgent
 from ui.view import View
 
 
 class CodeCorrectorPage(View):
     title = 'CodeCorrector'
+    __agent = CodeCorrectorAgent()
+    __question = ft.TextField(
+        hint_text="Digite sua Questão",
+        multiline=True,
+        expand_loose=True,
+        max_lines=3,
+    )
+    __language = ft.Dropdown(
+        value=LANGUAGES[0],
+        options=[ft.dropdown.Option(language) for language in LANGUAGES],
+        max_menu_height=200
+    )
+    __answer = ft.TextField(
+        hint_text="Digite sua Resposta",
+        multiline=True,
+        min_lines=9,
+        max_lines=9
+    )
+    __correction = ft.TextField(
+        hint_text='Sua correção aparecerá aqui...',
+        read_only=True,
+        multiline=True,
+        min_lines=5,
+        max_lines=5,
+    )
 
     def build(self):
-        self.__question = ft.TextField(
-            hint_text="Digite sua Questão",
-            multiline=True,
-            expand_loose=True,
-            max_lines=3,
-        )
-        self.__language = ft.Dropdown(
-            value=LANGUAGES[0],
-            options=[ft.dropdown.Option(language) for language in LANGUAGES],
-            max_menu_height=200
-        )
-        self.__answer = ft.TextField(
-            hint_text="Digite sua Resposta",
-            multiline=True,
-            min_lines=9,
-            max_lines=9
-        )
-        self.__correction = ft.TextField(
-            value='Sua correção aparecerá aqui...',
-            hint_text='Correção',
-            read_only=True,
-            multiline=True,
-            min_lines=5,
-            max_lines=5,
-        )
         self.content = [
             self.__question,
             self.__language,
@@ -54,25 +55,21 @@ class CodeCorrectorPage(View):
         ]
         return super().build()
 
-    def __get_response(self, e):
-        question = self.__question.value
-        answer = self.__answer.value
-        language = self.__language.value
-
+    def __get_response(self, _):
         self._loading.visible = True
 
         self.page.update()
 
-        correction = self._agent.run(
-            language, question, answer
+        self.__correction.value = self.__agent.run(
+            language=self.__language.value,
+            question=self.__question.value,
+            answer=self.__answer.value
         )
-
-        self.__correction.value = correction
 
         self._loading.visible = False
 
         self.page.update()
 
-    def __clear_correction(self, e):
+    def __clear_correction(self, _):
         self.__correction.value = ""
         self.page.update()

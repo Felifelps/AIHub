@@ -1,12 +1,10 @@
 import flet as ft
-from ai.gemini_agent import GeminiAgent
 
 
 class View(ft.View):
 
     title = ''
     content = []
-    _agent = GeminiAgent()
     _loading = ft.ProgressRing(
         width=25,
         height=25,
@@ -37,7 +35,7 @@ class View(ft.View):
                         ft.Text(
                             self.title,
                             expand=True,
-                            size=40,
+                            size=35,
                             text_align=ft.TextAlign.CENTER
                         )
                     ],
