@@ -7,7 +7,6 @@ class MainPage(View):
     def __init__(self, **kwargs):
         self.__question = ft.TextField(
             hint_text="Digite sua Questão",
-            value="Receba um número e exiba seu dobro",
             multiline=True,
             expand_loose=True,
             max_lines=3,

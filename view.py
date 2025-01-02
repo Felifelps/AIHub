@@ -1,10 +1,10 @@
 import flet as ft
-from agent import Agent
+from gemini_agent import GeminiAgent
 
 
 class View(ft.View):
 
-    _agent = Agent() 
+    _agent = GeminiAgent()
 
     def __init__(self, *controls, **kwargs):
         super().__init__(**kwargs)

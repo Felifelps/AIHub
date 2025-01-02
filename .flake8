@@ -1,0 +1,5 @@
+[flake8]
+# Exclui o .venv
+exclude = .venv
+# Line too long
+ignore = E501
