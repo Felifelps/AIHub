@@ -13,14 +13,14 @@ def main(page: ft.Page):
         ReadmeGeneratorPage(route='/readme'),
     ]}
 
-    page.views.append(tuple(views.values())[0])
+    page.views.append(views['/corrector'])
 
     def on_route_change(e):
         page.views[0] = views[page.route]
         page.update()
 
     page.on_route_change = on_route_change
-    page.go(page.views[0].route)
+    page.go('/corrector')
 
 
 if __name__ == "__main__":
