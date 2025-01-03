@@ -21,14 +21,12 @@ class CodeCorrectorPage(View):
     __answer = ft.TextField(
         hint_text="Digite sua Resposta",
         multiline=True,
-        min_lines=9,
-        max_lines=9
+        max_lines=7,
     )
     __correction = ft.TextField(
         hint_text='Sua correção aparecerá aqui...',
         read_only=True,
         multiline=True,
-        min_lines=5,
         max_lines=5,
     )
 

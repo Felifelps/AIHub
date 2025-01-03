@@ -38,8 +38,10 @@ class ReadmeGeneratorAgent(GeminiAgent):
         - Seja claro, conciso e organizado.  
         - Use formatação Markdown, incluindo títulos, listas e blocos de código, onde necessário.
         - Não coloque a resposta entre "```"s.
+        
+        **Nome do Repositório:** {repo_name}
 
-        **Lista de Arquivos no Repositório:**  
+        **Lista de Arquivos no Repositório:**
         {data}  
         """
     )
@@ -57,4 +59,7 @@ class ReadmeGeneratorAgent(GeminiAgent):
         documents = loader.load()
         data = "\n".join([doc.page_content for doc in documents])
 
-        return super().run(data=data)
+        return super().run(
+            repo_name=repo_name,
+            data=data
+        )

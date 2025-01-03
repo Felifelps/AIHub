@@ -15,11 +15,12 @@ class ReadmeGeneratorPage(View):
     __branch = ft.TextField(
         hint_text="Branch",
         expand_loose=True,
+        helper_text="Branch desejado"
     )
     __extensions = ft.TextField(
-        hint_text="Extensões (opcional)",
+        hint_text="Extensões",
         expand_loose=True,
-        helper_text="Separe por vírgulas, ex: .py,.md,.js."
+        helper_text="Separe por vírgulas, ex: .py, .md, .js."
     )
     __readme = ft.Markdown(
         "Seu readme aparecerá aqui",
@@ -40,7 +41,7 @@ class ReadmeGeneratorPage(View):
                         on_click=self.__clear_readme
                     ),
                     ft.OutlinedButton(
-                        'Copiar',
+                        "Copiar",
                         on_click=self.__copy_readme
                     ),
                     ft.FilledButton(
@@ -89,7 +90,7 @@ class ReadmeGeneratorPage(View):
         self.__readme.value = self.__agent.run(
             self.__repo_name.value,
             self.__branch.value,
-            self.__extensions.value.split(",")
+            self.__extensions.value.split(",").replace(" ", "")
         )
 
         self._loading.visible = False
