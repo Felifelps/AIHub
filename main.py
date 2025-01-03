@@ -9,18 +9,18 @@ def main(page: ft.Page):
     page.auto_scroll = True
 
     views = {view.route: view for view in [
+        ReadmeGeneratorPage(route='/readme'),
         CodeCorrectorPage(route='/corrector'),
-        ReadmeGeneratorPage(route='/readme')
     ]}
 
-    page.views.append(views['/corrector'])
+    page.views.append(views['/readme'])
 
     def on_route_change(e):
         page.views[0] = views[page.route]
         page.update()
 
     page.on_route_change = on_route_change
-    page.go('/corrector')
+    page.go('/readme')
 
 
 if __name__ == "__main__":
