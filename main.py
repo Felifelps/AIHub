@@ -28,5 +28,6 @@ if __name__ == "__main__":
         name="",
         target=main,
         port=8000,
-        view=ft.AppView.FLET_APP_WEB
+        view=ft.AppView.FLET_APP_WEB,
+        assets_dir='assets'
     )

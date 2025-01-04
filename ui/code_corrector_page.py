@@ -21,6 +21,7 @@ class CodeCorrectorPage(View):
     __answer = ft.TextField(
         hint_text="Digite sua Resposta",
         multiline=True,
+        min_lines=5,
         max_lines=7,
     )
     __correction = ft.TextField(
