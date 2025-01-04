@@ -10,7 +10,7 @@ class ReadmeGeneratorPage(View):
     __repo_name = ft.TextField(
         hint_text="Nome do repositório",
         expand_loose=True,
-        helper_text="username/nome do repositório"
+        helper_text="username/nome do repositório. O repositório precisa ser público"
     )
     __branch = ft.TextField(
         hint_text="Branch",
