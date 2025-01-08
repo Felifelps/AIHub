@@ -13,7 +13,8 @@ class MercadoLivreAgent(GeminiAgent):
         query "{query}" e ordene as ofertas encontradas por
         melhor custo-benefício.
 
-        Não responda em JSON, apenas liste as melhores ofertas
+        Não responda em JSON, apenas liste as melhores ofertas.
+        Responda sempre em português brasileiro.
         """
     )
 

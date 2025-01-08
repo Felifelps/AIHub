@@ -11,7 +11,7 @@ class MercadoLivreSearchTool(BaseTool):
         self.__client = MercadoLivreClient()
 
     def _run(self, query):
-        return self.__client.search_products(query)
+        return str(self.__client.search_products(query))
 
     def _arun(self, query):
         raise NotImplementedError("Busca assíncrona não implementada.")
