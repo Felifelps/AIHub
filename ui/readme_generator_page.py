@@ -90,7 +90,7 @@ class ReadmeGeneratorPage(View):
         self.__readme.value = self.__agent.run(
             self.__repo_name.value,
             self.__branch.value,
-            self.__extensions.value.split(",").replace(" ", "")
+            self.__extensions.value.replace(" ", "").split(",")
         )
 
         self._loading.visible = False

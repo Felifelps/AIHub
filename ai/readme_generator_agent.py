@@ -47,19 +47,23 @@ class ReadmeGeneratorAgent(GeminiAgent):
     )
 
     def run(self, repo_name, branch, extensions=['.md']):
-        loader = GithubFileLoader(
-            repo=repo_name, # username/project_name
-            branch=branch,
-            github_api_url="https://api.github.com",
-            file_filter=lambda file_path: any(
-                (file_path.endswith(ext) for ext in extensions)
+        try:
+            loader = GithubFileLoader(
+                repo=repo_name, # username/project_name
+                branch=branch,
+                github_api_url="https://api.github.com",
+                file_filter=lambda file_path: any(
+                    (file_path.endswith(ext) for ext in extensions)
+                )
             )
-        )
 
-        documents = loader.load()
-        data = "\n".join([doc.page_content for doc in documents])
+            documents = loader.load()
+            data = "\n".join([doc.page_content for doc in documents])
 
-        return super().run(
-            repo_name=repo_name,
-            data=data
-        )
+            return super().run(
+                repo_name=repo_name,
+                data=data
+            )
+        except Exception as e:
+            print(e)
+            return "An error ocurred while using AI"
