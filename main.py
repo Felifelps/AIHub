@@ -1,33 +1,38 @@
-import flet as ft
-from ui.code_corrector_page import CodeCorrectorPage
-from ui.readme_generator_page import ReadmeGeneratorPage
+from ui.code_corrector_page import render_code_corrector_page
+from ui.home_page import render_home_page
+from ui.readme_generator_page import render_readme_generator_page
+import streamlit as st
 
 
-def main(page: ft.Page):
-    page.title = "CodeCorrector"
-    page.theme_mode = 'dark'
-    page.auto_scroll = True
+def main():
+    st.title('AIHub')
 
-    views = {view.route: view for view in [
-        CodeCorrectorPage(route='/corrector'),
-        ReadmeGeneratorPage(route='/readme'),
-    ]}
+    pages = {
+        'Home': render_home_page,
+        'CodeCorrector': render_code_corrector_page,
+        'ReadmeGenerator': render_readme_generator_page,
+    }
 
-    page.views.append(views['/corrector'])
-
-    def on_route_change(e):
-        page.views[0] = views[page.route]
-        page.update()
-
-    page.on_route_change = on_route_change
-    page.go('/corrector')
-
-
-if __name__ == "__main__":
-    ft.app(
-        name="",
-        target=main,
-        port=8000,
-        view=ft.AppView.FLET_APP_WEB,
-        assets_dir='assets'
+    menu_option = st.sidebar.selectbox(
+        'Select an option:',
+        tuple(pages.keys())
     )
+
+    render_page = pages[menu_option]
+
+    render_page()
+
+    st.markdown(
+        '''
+        <p
+            style="text-align: center; position: fixed; bottom: 0"
+        >
+            © 2024 Felifelps - Todos os direitos reservados.
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+
+if __name__ == '__main__':
+    main()

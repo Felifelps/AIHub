@@ -24,8 +24,12 @@ class VectorStore:
         ).as_retriever()
 
     @classmethod
-    def get_collections(cls, collection_name):
-        return None
+    def list_collections(cls):
+        chroma_client = Chroma(
+            embedding_function=cls.__embedding,
+            persist_directory=cs.PERSIST_VECTOR_STORE_DIR
+        )
+        return [collection.name for collection in chroma_client._client.list_collections()]
 
     @classmethod
     def add_pdf(cls, collection_name, pdf_path):
@@ -38,7 +42,7 @@ class VectorStore:
     def __get_pdf_docs(cls, pdf_path):
         docs = PyPDFLoader(pdf_path).load()
         if not docs:
-            raise Exception('The pdf has no text data')
+            raise Exception('The PDF file has no text data')
         return docs
 
     @classmethod

@@ -7,7 +7,9 @@ from ai.rag.vector_store import VectorStore
 
 #VectorStore.add_pdf('Dnd', "C:\\Users\\Felipe\\Área de Trabalho\\D&D 5e - Básico.pdf")
 
-class TestAgent(RAGAgent, OpenaiAgent):
+print(VectorStore.list_collections())
+
+class TestAgent(RAGAgent, GeminiAgent):
     pass
 
 

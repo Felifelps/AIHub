@@ -8,7 +8,7 @@ from langchain_core.prompts import ChatPromptTemplate
 class RAGAgent(Agent):
     _prompt_template = ChatPromptTemplate.from_messages(
         {
-            ('system', 'Você é um assistente especializado que responde perguntas de forma clara e objetiva. Use as informações fornecidas no contexto abaixo para elaborar suas respostas. Caso não encontre uma resposta no contexto, explique que a informação não está disponível e evite inventar dados. Contexto: {context}'),
+            ('system', 'Você é um assistente especializado que responde perguntas de forma clara e objetiva. Use as informações fornecidas no contexto abaixo para elaborar suas respostas, ou use mais contextos para pesquisar. Caso não encontre uma resposta no contexto, explique que a informação não está disponível e evite inventar dados. Contexto: {context}'),
             ('human', '{input}')
         }
     )
