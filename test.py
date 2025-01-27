@@ -5,13 +5,13 @@ from ai.rag.rag_agent import RAGAgent
 from ai.rag.vector_store import VectorStore
 
 
-#VectorStore.add_pdf('dnd', 'C:\\Users\\Felipe\\Área de Trabalho\\D&D 5e - Básico.pdf')
+#VectorStore.add_pdf('Dnd', "C:\\Users\\Felipe\\Área de Trabalho\\D&D 5e - Básico.pdf")
 
-class DnDAgent(RAGAgent, GeminiAgent):
+class TestAgent(RAGAgent, OpenaiAgent):
     pass
 
 
-agent = DnDAgent('dnd')
+agent = TestAgent('LivroIP')
 while True:
     try:
         a = agent.run(input('Ask: '))

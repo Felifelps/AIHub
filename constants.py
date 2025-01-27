@@ -3,7 +3,7 @@ LANGUAGES = [
     "Python"
 ]
 
-OPENAI_MODEL = "gpt-3.5-turbo"
+OPENAI_MODEL = "gpt-4"
 GEMINI_MODEL = "gemini-1.5-flash-8b"
 
 PERSIST_VECTOR_STORE_DIR = "db"
