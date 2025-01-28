@@ -11,9 +11,13 @@ def render_readme_generator_page():
 
     if st.button('Generate'):
         with st.spinner('Generating...'):
-            response = agent.run(
-                repo_name=repo_name,
-                branch=branch,
-                extensions=extensions,
-            )
-            st.markdown(response)
+            try:
+                response = agent.run(
+                    repo_name=repo_name,
+                    branch=branch,
+                    extensions=extensions,
+                )
+                st.markdown(response)
+            except Exception as e:
+                print(e)
+                st.warning('An error ocurred')

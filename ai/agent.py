@@ -19,8 +19,4 @@ class Agent:
         return self._chain.invoke(input_variables)
 
     def run(self, **input_variables):
-        try:
-            return self.invoke(**input_variables)
-        except Exception as e:
-            print(e)
-            return "An error ocurred while using AI"
+        return self.invoke(**input_variables)

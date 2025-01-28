@@ -15,10 +15,14 @@ def render_code_corrector_page():
 
     if st.button('Correct'):
         with st.spinner('Analising...'):
-            response = agent.run(
-                question=question,
-                language=language,
-                answer=answer
-            )
-            st.markdown('## Resposta')
-            st.markdown(response)
+            try:
+                response = agent.run(
+                    question=question,
+                    language=language,
+                    answer=answer
+                )
+                st.markdown('## Resposta')
+                st.markdown(response)
+            except Exception as e:
+                print(e)
+                st.warning('An error ocurred')

@@ -1,6 +1,7 @@
 import os
 from ai.aihub_agent import AIHubAgent
 from ai.rag.vector_store import VectorStore
+from utils.file_handling import is_pdf, save_file, delete_file
 import streamlit as st
 
 
@@ -11,11 +12,18 @@ def render_home_page():
         if not current_collections:
             st.error("No collections found. Please add documents to the vector store.")
             return
+        
+        with st.sidebar:
 
-        collection = st.sidebar.selectbox(
-            'Select a Document Collection',
-            ['---'] + current_collections
-        )
+            collection = st.selectbox(
+                'Select a Document Collection',
+                ['---'] + current_collections
+            )
+
+            if st.button('Delete current file (irreversible action)'):
+                with st.spinner('deleting'):
+                    VectorStore.delete_collection(collection)
+                return st.rerun()
 
         render_add_pdf_form()
 
@@ -32,31 +40,39 @@ def render_home_page():
 
 
 def render_add_pdf_form():
-    temp_dir = "temp_files"
-    if 'temp_dir' not in st.session_state:
-        os.makedirs(temp_dir, exist_ok=True)
-        st.session_state.temp_dir = temp_dir
+    with st.sidebar:
+        temp_dir = "temp_files"
+        if 'temp_dir' not in st.session_state:
+            os.makedirs(temp_dir, exist_ok=True)
+            st.session_state.temp_dir = temp_dir
 
-    file = st.sidebar.file_uploader('Add a PDF file:')
+        files = st.file_uploader(
+            'Add a PDF file:',
+            accept_multiple_files=True
+        )        
 
-    if file:
-        
-        if not file.name.endswith('.pdf'):
-            return st.sidebar.warning('Only pdf files accepted')
+        if st.button('Add PDF'):
+            with st.spinner('Adding...'):
+                for file in files:
+                    if not is_pdf(file.name):
+                        return st.warning('Only pdf files accepted')
 
-        file_path = os.path.join(temp_dir, file.name)
-        with open(file_path, "wb") as f:
-            f.write(file.getbuffer())
+                    file_name = VectorStore.validate_collection_name(file.name)
 
-    if st.sidebar.button('Add PDF'):
-        with st.spinner('Adding...'):
-            VectorStore.add_pdf(
-                file.name.replace(' ', ''),
-                file_path
-            )
+                    file_path = os.path.join(temp_dir, file_name)
 
-            os.remove(file_path)
-        st.rerun()
+                    try:
+                        save_file(file, file_path)
+
+                        VectorStore.add_pdf(file_name, file_path)
+                        st.success('File added succesfully!')
+
+                        delete_file(file_path)
+                    except Exception as e:
+                        print(e)
+                        st.warning('An error ocurred')
+
+            st.rerun()
 
 
 def render_chat_messages(collection):
@@ -74,7 +90,10 @@ def render_chat_messages(collection):
             st.markdown(prompt)
         st.session_state.messages[collection].append({"role": "user", "content": prompt})
 
-        response = agent.run(str(prompt))
+        try:
+            response = agent.run(str(prompt))
+        except Exception as e:
+            return st.warning('An error ocurred')
 
         with st.chat_message("assistant"):
             st.markdown(response)
