@@ -5,7 +5,6 @@ def page_title():
     st.set_page_config(
         page_title='AIHub',
         page_icon='🤖',
-        initial_sidebar_state="expanded"
     )
 
     st.title('AIHub')
