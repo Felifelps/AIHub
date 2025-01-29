@@ -1,11 +1,13 @@
 from ui.code_corrector_page import render_code_corrector_page
 from ui.home_page import render_home_page
 from ui.readme_generator_page import render_readme_generator_page
+from utils.set_up_sqlite import set_up_sqlite
 import streamlit as st
 
 
-def main():
+set_up_sqlite()
 
+def main():
     st.set_page_config(
         page_title='AIHub',
         page_icon='🤖',
