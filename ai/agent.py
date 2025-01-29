@@ -1,8 +1,11 @@
 from dotenv import load_dotenv
+from langchain.globals import set_llm_cache
+from langchain_community.cache import SQLiteCache
 from langchain_core.output_parsers import StrOutputParser
 
 
 load_dotenv()
+set_llm_cache(SQLiteCache(database_path='cache.db'))
 
 
 class Agent:

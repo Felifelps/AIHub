@@ -14,16 +14,6 @@ class VectorStore:
     __embedding = OpenAIEmbeddings()
 
     @classmethod
-    def validate_collection_name(cls, collection_name):
-        collection_name = re.sub(r"[^a-zA-Z0-9._-]", "", collection_name.replace("..", ".").lower())
-        original_name = collection_name
-        count = 1
-        while collection_name in cls.list_collections():
-            collection_name = f"{original_name}-{count}"
-            count += 1
-        return collection_name
-
-    @classmethod
     def delete_collection(cls, collection_name):
         return Chroma(
             embedding_function=cls.__embedding,

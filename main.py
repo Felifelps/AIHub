@@ -1,54 +1,52 @@
-import os
 from ai.aihub_agent import AIHubAgent
 from ai.rag.vector_store import VectorStore
-from utils.file_handling import is_pdf, save_file, delete_file
+from utils.collection_name import validate_collection_name, convert_collection_name_to_valid
+from utils.file_handling import is_pdf, save_as_temp_file, delete_file
 from utils.page_utils import page_title, page_footer
 import streamlit as st
 
 
-@st.dialog('Add new file')
-def add_new_file():
-    temp_dir = "temp_files"
-    if 'temp_dir' not in st.session_state:
-        os.makedirs(temp_dir, exist_ok=True)
-        st.session_state.temp_dir = temp_dir
+@st.dialog('Create new chat')
+def create_new_chat():
 
-    files = st.file_uploader(
-        'Add a PDF file:',
-        accept_multiple_files=True
-    )
+    chat_name = st.text_input('ChatName (Defaults to file name):')
+    file = st.file_uploader('Add a PDF file:')
 
-    if st.button('Add PDF'):
-        with st.spinner('Adding...'):
-            for file in files:
-                if not is_pdf(file.name):
-                    return st.warning('Only pdf files accepted')
+    if st.button('Create new chat') and file:
+        with st.spinner('Creating...'):
+            if not is_pdf(file.name):
+                return st.warning('Only pdf files accepted')
 
-                file_name = VectorStore.validate_collection_name(file.name)
+            if not chat_name:
+                chat_name = convert_collection_name_to_valid(file.name)
 
-                file_path = os.path.join(temp_dir, file_name)
+            is_valid, message = validate_collection_name(chat_name)
 
-                try:
-                    save_file(file, file_path)
+            if not is_valid:
+                return st.warning(message)
 
-                    VectorStore.add_pdf(file_name, file_path)
-                    st.success('File added succesfully!')
+            try:
+                temp_file = save_as_temp_file(file)
+                tf_path = temp_file.name
 
-                    delete_file(file_path)
-                except Exception as e:
-                    print(e)
-                    st.warning('An error ocurred')
+                VectorStore.add_pdf(chat_name, tf_path)
+                st.success('File added succesfully!')
+
+                delete_file(tf_path)
+            except Exception as e:
+                print(e)
+                st.warning('An error ocurred')
 
         st.rerun()
 
-@st.dialog('Delete current file')
-def delete_current_file(collection):
+@st.dialog('Delete current chat')
+def delete_current_chat(collection):
     st.write(f'Are you sure you want to delete "{collection}"?')
 
     _, col2, col3 = st.columns([5, 1, 1])
 
     if col2.button('Yes', type='primary'):
-        with st.spinner('deleting'):
+        with st.spinner('Deleting...'):
             VectorStore.delete_collection(collection)
         st.rerun()
 
@@ -59,9 +57,9 @@ def delete_current_file(collection):
 page_title()
 
 try:
-    current_collections = VectorStore.list_collections()
+    st.session_state.current_collections = VectorStore.list_collections()
 
-    if not current_collections:
+    if not st.session_state.current_collections:
         st.error("No collections found. Please add documents to the vector store.")
 
     col1, col2, col3 = st.columns([13, 1, 1])
@@ -69,16 +67,16 @@ try:
     with col1:
         collection = st.selectbox(
             'Select a Document Collection',
-            ['---'] + current_collections
+            ['---'] + st.session_state.current_collections 
         )
     
     with col2:
         if st.button('', icon=':material/add:'):
-            add_new_file()
+            create_new_chat()
         
     with col3:
         if collection != '---' and st.button('', icon=':material/delete:', type='primary'):
-            delete_current_file(collection)
+            delete_current_chat(collection)
 
     if "messages" not in st.session_state:
         st.session_state.messages = {}
