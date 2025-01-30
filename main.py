@@ -86,25 +86,30 @@ try:
             st.session_state.messages[collection] = []            
 
         for message in st.session_state.messages[collection]:
-            with st.chat_message(message["role"]):
-                st.markdown(message["content"])
+            with st.chat_message(message[0]): # role
+                st.markdown(message[1]) # content
 
         if prompt := st.chat_input("What is up?"):
-            agent = AIHubAgent(collection)
+            agent = AIHubAgent(
+                collection,
+                st.session_state.messages[collection]
+            )
 
             with st.chat_message("user"):
                 st.markdown(prompt)
-            st.session_state.messages[collection].append({"role": "user", "content": prompt})
+
+            st.session_state.messages[collection].append(("user", prompt))
 
             try:
-                response = agent.run(str(prompt))
+                with st.spinner('Loading response...'):
+                    response = agent.run(str(prompt))
             except Exception as e:
                 st.warning('An error ocurred')
                 st.rerun()
 
             with st.chat_message("assistant"):
                 st.markdown(response)
-            st.session_state.messages[collection].append({"role": "assistant", "content": response})
+            st.session_state.messages[collection].append(("assistant", response))
 
 
 except Exception as e:

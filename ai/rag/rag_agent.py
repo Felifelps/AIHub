@@ -6,14 +6,15 @@ from langchain_core.prompts import ChatPromptTemplate
 
 
 class RAGAgent(Agent):
-    _prompt_template = ChatPromptTemplate.from_messages(
-        {
-            ('system', 'Você é um assistente especializado que responde perguntas de forma clara e objetiva. Use as informações fornecidas no contexto abaixo para elaborar suas respostas, ou use mais contextos para pesquisar. Caso não encontre uma resposta no contexto, explique que a informação não está disponível e evite inventar dados. Contexto: {context}'),
-            ('human', '{input}')
-        }
-    )
 
-    def __init__(self, collection_name):
+    def __init__(self, collection_name, messages):
+        self._prompt_template = ChatPromptTemplate.from_messages(
+            [
+                ('system', 'Você é um assistente especializado que responde perguntas de forma elaborada e interativa usando markdown. Use as informações fornecidas no contexto abaixo para elaborar suas respostas, ou use mais contextos para pesquisar. Caso não encontre uma resposta no contexto, explique que a informação não está disponível e evite inventar dados. Contexto: {context}'),
+                *messages,
+                ('human', '{input}')
+            ]
+        )
         retriever = VectorStore.get_collection(collection_name)
         question_answer = create_stuff_documents_chain(
             llm=self._llm,
