@@ -1,4 +1,4 @@
-from ai.aihub_agent import AIHubAgent
+from ai.especific_agents.aihub_agent import AIHubAgent
 from ai.rag.vector_store import VectorStore
 from utils.collection_name import validate_collection_name, convert_collection_name_to_valid
 from utils.file_handling import is_pdf, save_as_temp_file, delete_file

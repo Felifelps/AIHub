@@ -1,4 +1,4 @@
-from ai.code_corrector_agent import CodeCorrectorAgent
+from ai.especific_agents.code_corrector_agent import CodeCorrectorAgent
 from constants import LANGUAGES
 from utils.page_utils import page_title, page_footer
 import streamlit as st

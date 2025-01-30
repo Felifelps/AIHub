@@ -1,9 +1,9 @@
-from ai.gemini_agent import GeminiAgent
+from ai.especific_agents import BASE_AGENT_CLASS
 from langchain_core.prompts import PromptTemplate
 from langchain_community.document_loaders import GithubFileLoader
 
 
-class ReadmeGeneratorAgent(GeminiAgent):
+class ReadmeGeneratorAgent(BASE_AGENT_CLASS):
     _prompt_template = PromptTemplate.from_template(
         """
         **Instruções para a IA:**  

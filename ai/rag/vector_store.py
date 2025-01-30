@@ -1,4 +1,3 @@
-import re
 import constants as cs
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma

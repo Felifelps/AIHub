@@ -1,8 +1,8 @@
-from ai.gemini_agent import GeminiAgent
+from ai.especific_agents import BASE_AGENT_CLASS
 from langchain_core.prompts import PromptTemplate
 
 
-class CodeCorrectorAgent(GeminiAgent):
+class CodeCorrectorAgent(BASE_AGENT_CLASS):
     _prompt_template = PromptTemplate.from_template(
         """
         Dada a questão, você deve:

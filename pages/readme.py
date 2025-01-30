@@ -1,4 +1,4 @@
-from ai.readme_generator_agent import ReadmeGeneratorAgent
+from ai.especific_agents.readme_generator_agent import ReadmeGeneratorAgent
 from utils.page_utils import page_title, page_footer
 import streamlit as st
 
