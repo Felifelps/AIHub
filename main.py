@@ -39,6 +39,7 @@ def create_new_chat():
 
         st.rerun()
 
+
 @st.dialog('Delete current chat')
 def delete_current_chat(collection):
     st.write(f'Are you sure you want to delete "{collection}"?')
@@ -67,13 +68,13 @@ try:
     with col1:
         collection = st.selectbox(
             'Select a Document Collection',
-            ['---'] + st.session_state.current_collections 
+            ['---'] + st.session_state.current_collections
         )
-    
+
     with col2:
         if st.button('', icon=':material/add:'):
             create_new_chat()
-        
+
     with col3:
         if collection != '---' and st.button('', icon=':material/delete:', type='primary'):
             delete_current_chat(collection)
@@ -83,11 +84,11 @@ try:
 
     if collection != '---':
         if collection not in st.session_state.messages:
-            st.session_state.messages[collection] = []            
+            st.session_state.messages[collection] = []
 
         for message in st.session_state.messages[collection]:
-            with st.chat_message(message[0]): # role
-                st.markdown(message[1]) # content
+            with st.chat_message(message[0]):  # role
+                st.markdown(message[1])  # content
 
         if prompt := st.chat_input("What is up?"):
             agent = AIHubAgent(
@@ -104,6 +105,7 @@ try:
                 with st.spinner('Loading response...'):
                     response = agent.run(str(prompt))
             except Exception as e:
+                print(e)
                 st.warning('An error ocurred')
                 st.rerun()
 

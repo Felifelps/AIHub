@@ -19,11 +19,12 @@ def validate_collection_name(collection_name):
 
     return True, None
 
+
 def convert_collection_name_to_valid(collection_name):
     collection_name = re.sub(r"[^a-zA-Z0-9_-]", "", collection_name)
     original_name = collection_name
     count = 1
-    while collection_name in st.session_state.current_collections :
+    while collection_name in st.session_state.current_collections:
         collection_name = f"{original_name}-{count}"
         count += 1
     return collection_name

@@ -9,6 +9,7 @@ def page_title():
 
     st.title('AIHub')
 
+
 def page_footer():
     st.markdown(
         '''
