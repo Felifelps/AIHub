@@ -34,7 +34,7 @@ class VectorStore:
             embedding_function=cls.__embedding,
             persist_directory=cs.PERSIST_VECTOR_STORE_DIR
         )
-        return [collection.name for collection in chroma_client._client.list_collections()]
+        return [collection.name for collection in chroma_client._client.list_collections() if collection.name != 'langchain']
 
     @classmethod
     def add_pdf(cls, collection_name, pdf_path):
