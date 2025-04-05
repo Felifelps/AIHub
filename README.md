@@ -1,87 +1,47 @@
 # AIHub
-
-Este projeto é uma aplicação web desenvolvida com Flet que utiliza a biblioteca LangChain para integrar modelos de IA, como Gemini e OpenAI, para realizar correção de código e geração de arquivos README.
-
 ## Descrição do Projeto
-
-O AIHub oferece duas funcionalidades principais:
-
-* **Correção de Código:** Permite ao usuário inserir uma questão e uma resposta em uma linguagem específica (Python ou Pseudocódigo), e o sistema analisa a resposta quanto à correção, identificando erros e fornecendo feedback.
-* **Geração de README:** Permite a geração automática de arquivos README.md para repositórios GitHub, com base nos arquivos do repositório.
-
-O projeto visa simplificar tarefas comuns de desenvolvimento de software, como a análise de respostas de modelos de IA e a criação de documentação.
+O AIHub é um repositório de código que visa criar uma plataforma de inteligência artificial para geração de conteúdo, correção de código e outras funcionalidades relacionadas à IA. O projeto é desenvolvido em Python e utiliza bibliotecas como LangChain, OpenAI e Groq para implementar as funcionalidades de IA.
 
 ## Estrutura dos Arquivos
+O repositório contém os seguintes arquivos e pastas:
 
-* **`ai/agent.py`:** Classe base para os agentes de IA, contendo o método `run` para a execução das chamadas aos modelos de IA.
-* **`ai/gemini_agent.py`:** Classe derivada de `Agent` que utiliza o modelo Gemini.
-* **`ai/code_corrector_agent.py`:** Classe derivada de `GeminiAgent` especializada na correção de código.
-* **`ai/readme_generator_agent.py`:** Classe derivada de `GeminiAgent` especializada na geração de arquivos README.
-* **`ai/openai_agent.py`:** Classe derivada de `Agent` que utiliza o modelo OpenAI.
-* **`constants.py`:**  Arquivo contendo constantes, como URLs e chaves de API.
-* **`ui/code_corrector_page.py`:**  Define a página para correção de código na interface.
-* **`ui/readme_generator_page.py`:** Define a página para geração de README na interface.
-* **`ui/view.py`:** Classe base para as páginas da interface.
-* **`main.py`:** Arquivo principal que inicia a aplicação Flet.
-* **`.env`:** Arquivo para armazenar as chaves API e tokens (GOOGLE_API_KEY, OPENAI_API_KEY, GITHUB_PERSONAL_ACCESS_TOKEN).
+* `ai`: pasta que contém os arquivos relacionados à inteligência artificial, incluindo os agentes e os modelos de IA.
+* `agents`: pasta que contém os arquivos dos agentes de IA, incluindo o `AIHubAgent`, `CodeCorrectorAgent` e `ReadmeGeneratorAgent`.
+* `utils`: pasta que contém os arquivos de utilidade, incluindo funções para validação de nomes de coleção e conversão de nomes de arquivo.
+* `constants`: arquivo que contém constantes utilizadas no projeto, incluindo os modelos de IA e as configurações de banco de dados.
+* `requirements.txt`: arquivo que contém as dependências do projeto.
+* `streamlit`: pasta que contém os arquivos relacionados à interface do usuário, incluindo o `app.py` e o `page_utils.py`.
 
 ## Instruções de Configuração e Execução
+Para configurar e executar o projeto, siga os passos abaixo:
 
-1. **Instalação das Dependências:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. **Configuração do Ambiente:**
-   * Crie um arquivo `.env` no diretório raiz do projeto.
-   * Adicione as chaves da API do Google e da OpenAI neste arquivo, além do token do GitHub, no seguinte formato:
-
-     ```
-     GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY
-     OPENAI_API_KEY=YOUR_OPENAI_API_KEY
-     GITHUB_PERSONAL_ACCESS_TOKEN=YOUR_GITHUB_TOKEN
-     ```
-
-
-3. **Execução:**
-   ```bash
-   python main.py
-   ```
-
-A aplicação será aberta em seu navegador.
+1. Instale as dependências necessárias utilizando o comando `pip install -r requirements.txt`.
+2. Configure as variáveis de ambiente necessárias, incluindo a chave de API do Google e a chave de API do OpenAI.
+3. Execute o comando `streamlit run app.py` para iniciar a interface do usuário.
 
 ## Exemplos de Uso
+O AIHub pode ser utilizado para diversas finalidades, incluindo:
 
-**Correção de Código:**
-
-1. Digite a questão na caixa de texto "Digite sua Questão".
-2. Selecione a linguagem da resposta na caixa de seleção "Linguagem".
-3. Digite a resposta na caixa de texto "Digite sua Resposta".
-4. Clique no botão "Corrigir".
-
-O resultado da correção será exibido na caixa "Sua correção aparecerá aqui...".
-
-**Geração de README:**
-
-1. Digite o nome do repositório (username/repositório) na caixa de texto "Nome do repositório".
-2. Digite o nome da branch na caixa de texto "Branch".
-3. Digite as extensões de arquivos a serem consideradas, separadas por vírgula (ex.: `.py, .md, .js`).
-4. Clique no botão "Gerar".
-
-O arquivo README.md gerado será exibido na tela. Para copiar o conteúdo, clique no botão "Copiar".
-
-(Este README foi gerado usando o ReadmeGenerator).
+* Geração de conteúdo: o `AIHubAgent` pode ser utilizado para gerar conteúdo baseado em um conjunto de dados.
+* Correção de código: o `CodeCorrectorAgent` pode ser utilizado para corrigir código-fonte baseado em um conjunto de regras.
+* Geração de documentos: o `ReadmeGeneratorAgent` pode ser utilizado para gerar documentos baseados em um conjunto de dados.
 
 ## Requisitos
+O projeto requer as seguintes dependências:
 
-* Python 3.9 ou superior
-* Bibliotecas: `flet`, `langchain`, `google-generative-ai`, `langchain-google-genai`, `langchain-openai`, `python-dotenv`, `pyperclip`
+* Python 3.8 ou superior
+* LangChain 0.3.14 ou superior
+* OpenAI 1.59.9 ou superior
+* Groq 0.16.0 ou superior
+* Streamlit 1.41.1 ou superior
 
 ## Contribuição
+Para contribuir com o projeto, siga os passos abaixo:
 
-Contribuições são bem-vindas! Por favor, abra um issue ou um pull request para relatar problemas ou adicionar novos recursos.
-
+1. Faça um fork do repositório.
+2. Crie uma branch para sua contribuição.
+3. Realize as alterações necessárias.
+4. Envie um pull request para o repositório principal.
 
 ## Licença
-
-Até agora sem licença.
+O projeto é licenciado sob a licença MIT.

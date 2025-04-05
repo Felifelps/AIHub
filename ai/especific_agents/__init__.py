@@ -1,4 +1,4 @@
-from ai.groq_agent import GroqAgent
+from ai.openai_agent import OpenaiAgent
 
 
-BASE_AGENT_CLASS = GroqAgent
+BASE_AGENT_CLASS = OpenaiAgent

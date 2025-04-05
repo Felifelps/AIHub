@@ -2,5 +2,10 @@ __pycache__
 .env
 .venv
 .devcontainer
+
+**.spec
+build
+dist
+
 db
 cache.db

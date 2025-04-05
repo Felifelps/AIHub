@@ -1,7 +1,7 @@
 import constants as cs
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
-from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader, GithubFileLoader
 from langchain_openai import OpenAIEmbeddings
 
 
@@ -49,6 +49,26 @@ class VectorStore:
         if not docs:
             raise Exception('The PDF file has no text data')
         return docs
+
+    @classmethod
+    def add_github_repo(cls, collection_name, repo_name, branch, extensions=['.md']):
+        return cls.__add_data_to_collection(
+            collection_name=collection_name,
+            docs=cls.__get_github_repo_docs(repo_name, branch, extensions)
+        )
+    
+    @classmethod
+    def __get_github_repo_docs(cls, repo_name, branch, extensions):
+        loader = GithubFileLoader(
+            repo=repo_name, # username/project_name
+            branch=branch,
+            github_api_url="https://api.github.com",
+            file_filter=lambda file_path: any(
+                (file_path.endswith(ext) for ext in extensions)
+            )
+        )
+
+        return loader.load()
 
     @classmethod
     def __add_data_to_collection(cls, collection_name, docs):

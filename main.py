@@ -1,58 +1,9 @@
 from ai.especific_agents.aihub_agent import AIHubAgent
 from ai.rag.vector_store import VectorStore
-from utils.collection_name import validate_collection_name, convert_collection_name_to_valid
-from utils.file_handling import is_pdf, save_as_temp_file, delete_file
+from src.create_new_chat import create_new_chat
+from src.delete_chat import delete_current_chat
 from utils.page_utils import page_title, page_footer
 import streamlit as st
-
-
-@st.dialog('Create new chat')
-def create_new_chat():
-
-    chat_name = st.text_input('ChatName (Defaults to file name):')
-    file = st.file_uploader('Add a PDF file:')
-
-    if st.button('Create new chat') and file:
-        with st.spinner('Creating...'):
-            if not is_pdf(file.name):
-                return st.warning('Only pdf files accepted')
-
-            if not chat_name:
-                chat_name = convert_collection_name_to_valid(file.name)
-
-            is_valid, message = validate_collection_name(chat_name)
-
-            if not is_valid:
-                return st.warning(message)
-
-            try:
-                temp_file = save_as_temp_file(file)
-                tf_path = temp_file.name
-
-                VectorStore.add_pdf(chat_name, tf_path)
-                st.success('File added succesfully!')
-
-                delete_file(tf_path)
-            except Exception as e:
-                print(e)
-                st.warning('An error ocurred')
-
-        st.rerun()
-
-
-@st.dialog('Delete current chat')
-def delete_current_chat(collection):
-    st.write(f'Are you sure you want to delete "{collection}"?')
-
-    _, col2, col3 = st.columns([5, 1, 1])
-
-    if col2.button('Yes', type='primary'):
-        with st.spinner('Deleting...'):
-            VectorStore.delete_collection(collection)
-        st.rerun()
-
-    if col3.button('No'):
-        st.rerun()
 
 
 page_title()
